@@ -8,13 +8,13 @@
 		<th>Body</th>
 		<th>Action</th>
 	</tr>
-	  <% for(var i=0; i<vdata.length; i++) {%>
+	  <% vdata.forEach(function (val) { %>
 	<tr>
-		<td><%= vdata[i]._id %></td>
-		<td><%= vdata[i].title %></td>
-		<td><%= vdata[i].body %></td>
-		<td></td>
+		<td><%= val._id %></td>
+		<td><%= val.title %></td>
+		<td><%= val.body %></td>
+		<td><a href="/post/edit_post/<%= val._id %>">Edit</a></td>
 	</tr>
-	<% } %>
+	<% }) %>
 
 </table>

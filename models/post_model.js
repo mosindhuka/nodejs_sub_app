@@ -5,8 +5,21 @@ exports.show = function (cb) {
   });
 }
 
+exports.view = function (id,cb) {
+    db.get().collection('posts').find({_id:id}).toArray(function (err, docs) {
+    cb(err, docs);
+  });
+}
+
 exports.create = function (doc,cb) {
     db.get().collection('posts').insertOne(doc,function (err, id) {
+    cb(err, id);
+  });
+}
+
+
+exports.update = function (id,doc,cb) {
+    db.get().collection('posts').updateOne({_id:id},{$set:doc},function (err, id) {
     cb(err, id);
   });
 }

@@ -16,6 +16,24 @@ app.route('/post/add_post')
 });
 
 
+app.route('/post/edit_post/:id')
+.all(function(req, res, next) {
+	next();
+})
+.get(function(req, res) {	
+	PostM.view(ObjectId(req.params.id),function(err, docs) {
+	//console.log(docs);	
+    res.render('edit_post',{vdata:docs});
+  });
+})
+.post(function(req, res) {
+	var doc={title: req.body.title, body:req.body.body,updated_on:new Date()};
+    	PostM.update(ObjectId(req.params.id),doc,function(err,id){
+  			res.redirect('/post');
+  		});
+});
+
+
 app.route('/post')
 .all(function(req, res, next) {
 	next();
