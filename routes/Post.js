@@ -22,7 +22,6 @@ app.route('/post/edit_post/:id')
 })
 .get(function(req, res) {	
 	PostM.view(ObjectId(req.params.id),function(err, docs) {
-	//console.log(docs);	
     res.render('edit_post',{vdata:docs});
   });
 })
@@ -31,6 +30,17 @@ app.route('/post/edit_post/:id')
     	PostM.update(ObjectId(req.params.id),doc,function(err,id){
   			res.redirect('/post');
   		});
+});
+
+
+app.route('/post/delete_post/:id')
+.all(function(req, res, next) {
+  next();
+})
+.get(function(req, res) { 
+  PostM.remove(ObjectId(req.params.id),function(err, docs) {
+      res.redirect('/post');
+  });
 });
 
 

@@ -23,3 +23,9 @@ exports.update = function (id,doc,cb) {
     cb(err, id);
   });
 }
+
+exports.remove = function (id,cb) {
+    db.get().collection('posts').deleteOne({_id:id},function (err, id) {
+    cb(err, id);
+  });
+}
