@@ -1,4 +1,4 @@
-var db = require('../db');
+const db = require('../db');
 exports.show = function (cb) {
     db.get().collection('posts').find().toArray(function (err, docs) {
     cb(err, docs);
