@@ -3,13 +3,14 @@ const app = express();
 global.app = app;
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 app.use(session({secret: "fryrtdfgdrdfsdfg"}));
-
+app.use(flash());
 app.set('view engine', 'ejs');
 
 const db = require('./db');

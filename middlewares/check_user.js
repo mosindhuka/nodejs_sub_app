@@ -1,4 +1,4 @@
-exports.checkUser = function(req, res, next) {
+module.exports.checkUser = function(req, res, next) {
     if(req.session.user_id)
     {
       next();

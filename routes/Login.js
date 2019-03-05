@@ -6,7 +6,7 @@ app.route('/')
 	next();
 })
 .get(function(req, res) {
-	res.render('index');
+	res.render('index',{expressFlash: req.flash('message')});
 })
 .post(function(req, res) {
     LoginM.login({username:req.body.username,password:req.body.username},function(err,doc){
@@ -19,10 +19,15 @@ app.route('/')
     		res.redirect('/post');
     	}
     	else{
+            req.flash('message', 'Invalid credentials!');
     		res.redirect('/');
     	}
     	
     });
 })
 
-
+app.route('/logout')
+.get(function(req, res) {
+    req.session.destroy();
+    res.redirect('/');
+})

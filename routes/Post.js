@@ -9,8 +9,9 @@ app.route('/post/add_post')
   res.render('add_post');
 })
 .post(function(req, res) {
-	var doc={user_id: ObjectId("56b43fd6049bda5d9ded67f0"), title: req.body.title, body:req.body.body,created_on:new Date(),updated_on:new Date()};
+	var doc={user_id: ObjectId(req.session.user_id), title: req.body.title, body:req.body.body,created_on:new Date(),updated_on:new Date()};
     	PostM.create(doc,function(err,id){
+        req.flash('message', 'Post created successfully !');
   			res.redirect('/post');
   		});
 });
@@ -28,7 +29,8 @@ app.route('/post/edit_post/:id')
 .post(function(req, res) {
 	var doc={title: req.body.title, body:req.body.body,updated_on:new Date()};
     	PostM.update(ObjectId(req.params.id),doc,function(err,id){
-  			res.redirect('/post');
+  			req.flash('message', 'Post updated successfully !');
+        res.redirect('/post');
   		});
 });
 
@@ -39,6 +41,7 @@ app.route('/post/delete_post/:id')
 })
 .get(function(req, res) { 
   PostM.remove(ObjectId(req.params.id),function(err, docs) {
+      req.flash('message', 'Post removed successfully !');
       res.redirect('/post');
   });
 });
@@ -50,7 +53,7 @@ app.route('/post')
 })
 .get(function(req, res) {
 	PostM.show(function(err, docs) {
-    res.render('list_post',{vdata:docs});
+    res.render('list_post',{expressFlash: req.flash('message'),vdata:docs});
   })	
 })
 
