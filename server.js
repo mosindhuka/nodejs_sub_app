@@ -4,12 +4,13 @@ global.app = app;
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session);
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
-app.use(session({secret: "fryrtdfgdrdfsdfg"}));
+app.use(session({secret: "fryrtdfgdrdfsdfg",store: new MongoStore({ url: 'mongodb://localhost:27017/test' })}));
 app.use(flash());
 app.set('view engine', 'ejs');
 
@@ -24,6 +25,7 @@ db.connect('mongodb://localhost:27017/test', function(err) {
   } else {
     app.listen(3000, function() {
       console.log('Listening on port 3000...');
+      console.log(app.get('env'));
     });
   }
 });
