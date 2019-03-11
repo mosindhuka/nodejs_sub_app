@@ -1,17 +1,23 @@
-var MongoClient = require('mongodb').MongoClient;
+var mysql = require('mysql');
 
 var state = {
   db: null,
 };
 
-module.exports.connect = function(url, done) {
+module.exports.connect = function(done) {
   if (state.db) return done();
 
-  MongoClient.connect(url,{ useNewUrlParser: true }, function(err, client) {
+  state.db=mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'mosin',
+    database : 'mosin'
+  });
+  state.db.connect(function(err) {
     if (err) return done(err);
-    state.db = client.db();
     done();
   });
+  
 }
 
 module.exports.get = function() {
@@ -20,7 +26,7 @@ module.exports.get = function() {
 
 module.exports.close = function(done) {
   if (state.db) {
-    state.db.close(function(err, result) {
+    state.db.end(function(err) {
       state.db = null;
       state.mode = null;
       done(err);
