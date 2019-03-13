@@ -6,6 +6,7 @@ module.exports.show = async function () {
 
 module.exports.view = async function (id) {
     var results= await db.get().collection('posts').find({_id:id}).toArray();
+    console.log(results);
     return results;
 }
 

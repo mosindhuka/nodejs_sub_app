@@ -34,9 +34,6 @@ var accessLogStream = rfs('access.log', {
 // setup the logger
 app.use(morgan('combined', { stream: accessLogStream }));
 
-
-
-
 const db = require('./db');
 const db2 = require('./db2');
 app.use(function(req, res, next) {
