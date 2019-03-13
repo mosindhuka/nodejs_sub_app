@@ -4,10 +4,10 @@ var state = {
   db: null,
 };
 
-module.exports.connect = function(url, done) {
+module.exports.connect = function(done) {
   if (state.db) return done();
 
-  MongoClient.connect(url,{ useNewUrlParser: true }, function(err, client) {
+  MongoClient.connect('mongodb://localhost:27017/test',{ useNewUrlParser: true }, function(err, client) {
     if (err) return done(err);
     state.db = client.db();
     done();

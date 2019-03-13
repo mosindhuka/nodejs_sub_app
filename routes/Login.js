@@ -8,9 +8,9 @@ app.route('/')
 .get(function(req, res) {
 	res.render('index',{expressFlash: req.flash('message')});
 })
-.post(function(req, res) {
-    LoginM.login({username:req.body.username,password:req.body.username},function(err,doc){
-    	//console.log(doc);
+.post(async function(req, res) {
+    var doc= await LoginM.login({username:req.body.username,password:req.body.username});
+    	
     	if(doc.length > 0)
     	{
     		req.session.user_id=doc[0]._id;
@@ -22,8 +22,7 @@ app.route('/')
             req.flash('message', 'Invalid credentials!');
     		res.redirect('/');
     	}
-    	
-    });
+    
 })
 
 app.route('/logout')
