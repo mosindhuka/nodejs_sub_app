@@ -12,13 +12,15 @@
 		<th>Id</th>
 		<th>Title</th>
 		<th>Body</th>
+		<th>User</th>
 		<th>Action</th>
 	</tr>
 	  <% vdata.forEach(function (val) { %>
 	<tr>
-		<td><%= val._id %></td>
+		<td><%= val.created_on %></td>
 		<td><%= val.title %></td>
 		<td><%= val.body %></td>
+		<td></td>
 		<td><a href="/post/edit_post/<%= val._id %>">Edit</a> | <a href="/post/delete_post/<%= val._id %>">Delete</a></td>
 	</tr>
 	<% }) %>

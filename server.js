@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 global.app = app;
 app.set('view engine', 'ejs');
+const path = require('path');
 const compression = require('compression');
 app.use(compression());
 const session = require('express-session');
@@ -9,17 +10,20 @@ const bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
+app.use(express.static('assets'));
+
+//const multer = require('multer');
+//app.use(multer({ dest: path.join(__dirname,'assets/uploads/') }).any());
+
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
 app.use(session({secret: "fryrtdfgdrdfsdfg",store: new MongoStore({ url: 'mongodb://localhost:27017/test' })}));
 app.use(flash());
 
-const fs = require('fs');
-const morgan = require('morgan');
-const path = require('path');
-const rfs = require('rotating-file-stream');
 
+const morgan = require('morgan');
+const rfs = require('rotating-file-stream');
 
 // create a rotating write stream
 var accessLogStream = rfs('access.log', {

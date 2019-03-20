@@ -3,6 +3,17 @@ const db = require('../db');
 
 module.exports.show = async function () {
     var results= await db.get().collection('posts').find().toArray();
+    /*var results=await db.get().collection('posts').aggregate([
+    {
+     $lookup:
+       {
+         from: "users",
+         localField: "user_id",
+         foreignField: "_id",
+         as: "posts"
+       }
+    }
+    ]).toArray();*/
     //var res2= await db2.query('SELECT * from users where id=?',[2]);
     return results;
 }
