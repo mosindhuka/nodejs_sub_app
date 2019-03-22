@@ -7,7 +7,7 @@ var state = {
 module.exports.connect = function(done) {
   if (state.db) return done();
 
-  MongoClient.connect('mongodb://localhost:27017/test',{ useNewUrlParser: true }, function(err, client) {
+  MongoClient.connect('mongodb+srv://test:test@cluster0-bevxn.mongodb.net/test?retryWrites=true',{ useNewUrlParser: true }, function(err, client) {
     if (err) return done(err);
     state.db = client.db();
     done();

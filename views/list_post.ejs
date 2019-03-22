@@ -20,7 +20,7 @@
 		<td><%= val.created_on %></td>
 		<td><%= val.title %></td>
 		<td><%= val.body %></td>
-		<td></td>
+		<td><%= val.user_docs[0].name %></td>
 		<td><a href="/post/edit_post/<%= val._id %>">Edit</a> | <a href="/post/delete_post/<%= val._id %>">Delete</a></td>
 	</tr>
 	<% }) %>

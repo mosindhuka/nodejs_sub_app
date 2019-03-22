@@ -85,7 +85,6 @@ app.route('/post')
 .get(async function(req, res, next) {
   try {
 	  var docs=await PostM.show();
-    //console.log(docs);
     res.render('list_post',{expressFlash: req.flash('message'),vdata:docs});	
     } catch (err) {
     next(err);

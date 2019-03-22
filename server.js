@@ -18,7 +18,7 @@ app.use(express.static('assets'));
 
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
-app.use(session({secret: "fryrtdfgdrdfsdfg",store: new MongoStore({ url: 'mongodb://localhost:27017/test' })}));
+app.use(session({secret: "fryrtdfgdrdfsdfg",resave: false,store: new MongoStore({ url: 'mongodb://localhost:27017/test' })}));
 app.use(flash());
 
 
