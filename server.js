@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 app.use(express.static('assets'));
 
-//const multer = require('multer');
+const multer = require('multer');
 //app.use(multer({ dest: path.join(__dirname,'assets/uploads/') }).any());
 
 const flash = require('connect-flash');
