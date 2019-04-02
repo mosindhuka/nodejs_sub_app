@@ -1,22 +1,17 @@
-const express = require('express');
-const app = express();
-global.app = app;
-app.set('view engine', 'ejs');
+var express = require("express");
 const path = require('path');
+var app = express();
+const helmet = require('helmet');
+app.use(helmet());
+
 const compression = require('compression');
 app.use(compression());
-const session = require('express-session');
+
 const bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
-app.use(express.static('assets'));
-
-const flash = require('connect-flash');
-const MongoStore = require('connect-mongo')(session);
-app.use(session({secret: "fryrtdfgdrdfsdfg",resave: false,store: new MongoStore({ url: 'mongodb://localhost:27017/test' })}));
-app.use(flash());
 
 const morgan = require('morgan');
 const rfs = require('rotating-file-stream');
@@ -35,9 +30,11 @@ app.use(function(req, res, next) {
   next();
 });
 
-const db = require('./db');
+var web = require("./web/server");
 
-require('./routes');
+app.use("/web", web);
+
+const db = require('./web/db');
 
 db.connect(function(err) {
   if (err) {

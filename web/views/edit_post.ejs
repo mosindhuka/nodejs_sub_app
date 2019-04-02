@@ -1,0 +1,10 @@
+<%- include('header'); %>
+<h2>Edit Post</h2>
+<form method="post" action="" enctype="multipart/form-data">
+	Title:<input type="text" name="title" value="<%= vdata[0].title %>" required><br>
+	Body:<input type="text" name="body" value="<%= vdata[0].body %>" required><br>
+	Image:<input type="file" name="image"><br>
+	<img src="<%= BASEURL %>uploads/<%= vdata[0].image %>"><br>
+	<input type="hidden" name="old_image" value="<%= vdata[0].image %>">
+	<input type="submit" name="submit">
+</form>

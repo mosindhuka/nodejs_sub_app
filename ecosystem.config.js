@@ -8,7 +8,7 @@ module.exports = {
     instances: 2,
     autorestart: true,
     watch: true,
-    ignore_watch: ["assets","log","node_modules","ecosystem.config.js"],
+    ignore_watch: ["web/assets/*","log","node_modules","ecosystem.config.js"],
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development'
