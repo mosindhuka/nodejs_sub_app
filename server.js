@@ -31,10 +31,12 @@ app.use(function(req, res, next) {
 });
 
 var web = require("./web/server");
+var api = require("./api/server");
 
 app.use("/web", web);
+app.use("/api", api);
 
-const db = require('./web/db');
+const db = require('./db');
 
 db.connect(function(err) {
   if (err) {
