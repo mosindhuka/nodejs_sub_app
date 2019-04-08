@@ -5,7 +5,7 @@ module.exports.checkUser = function(req, res, next) {
     }
     else
     {
-        res.redirect('/');
+        res.redirect(app.locals.BASEURL);
     }
 }
 

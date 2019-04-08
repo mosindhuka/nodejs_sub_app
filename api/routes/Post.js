@@ -11,9 +11,20 @@ app.route('/post/add_post')
 })
 .post(upload.single('image'),async function(req, res, next) {
   try {
-	     var doc={user_id: ObjectId(req.body.user_id), title: req.body.title, body:req.body.body,image:req.file.filename,created_on:new Date(),updated_on:new Date()};
+      if(req.body.user_id && req.body.title && req.body.body)
+      {
+       var filename='';
+       if(req.file)
+       {
+          var filename=req.file.filename;
+       } 
+	     var doc={user_id: ObjectId(req.body.user_id), title: req.body.title, body:req.body.body,image:filename,created_on:new Date(),updated_on:new Date()};
     	 var result=await PostM.create(doc);       
        res.json({"postId":result.insertedId});
+      }
+      else{
+        res.json({"error":"Invalid Input !"});
+      }
        } catch (err) {
     next(err);
   }
@@ -34,11 +45,16 @@ app.route('/post/edit_post/:id')
 })
 .post(upload.single('image'),async function(req, res, next) {
   try {
+    if(req.body.user_id && req.body.title && req.body.body)
+      {
       var image='';
       if(req.file)
       {
           image=req.file.filename;
-          fs.unlinkSync('web/assets/uploads/'+req.body.old_image);
+          var imgpath='web/assets/uploads/'+req.body.old_image;
+          if (req.body.old_image && fs.existsSync(imgpath)) {
+            fs.unlinkSync(imgpath);
+          }
       }
       else
       {
@@ -48,6 +64,10 @@ app.route('/post/edit_post/:id')
 	   var doc={title: req.body.title, body:req.body.body,image:image,updated_on:new Date()};
     	  var result=await PostM.update(ObjectId(req.params.id),doc);
   			res.json({"status":"Success"});
+      }
+      else{
+        res.json({"error":"Invalid Input !"});
+      }
    } catch (err) {
     next(err);
   }     

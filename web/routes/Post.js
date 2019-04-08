@@ -18,7 +18,12 @@ app.route('/post/add_post')
 })
 .post(upload.single('image'),async function(req, res, next) {
   try {
-	     var doc={user_id: ObjectId(req.session.user_id), title: req.body.title, body:req.body.body,image:req.file.filename,created_on:new Date(),updated_on:new Date()};
+        var filename='';
+        if(req.file)
+        {
+          var filename=req.file.filename;
+        }
+	     var doc={user_id: ObjectId(req.session.user_id), title: req.body.title, body:req.body.body,image:filename,created_on:new Date(),updated_on:new Date()};
     	 await PostM.create(doc);
        req.flash('message', 'Post created successfully !');
   		 res.redirect(app.locals.BASEURL+'post');
@@ -46,7 +51,10 @@ app.route('/post/edit_post/:id')
       if(req.file)
       {
           image=req.file.filename;
-          fs.unlinkSync('web/assets/uploads/'+req.body.old_image);
+          var imgpath='web/assets/uploads/'+req.body.old_image;
+          if (req.body.old_image && fs.existsSync(imgpath)) {
+            fs.unlinkSync(imgpath);
+          }
       }
       else
       {
